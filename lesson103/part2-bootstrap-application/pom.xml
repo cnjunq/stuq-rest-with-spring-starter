@@ -69,7 +69,7 @@
 		<maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
 		<maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-		<cargo-maven2-plugin.version>1.6.3-SNAPSHOT</cargo-maven2-plugin.version>
+		<cargo-maven2-plugin.version>1.5.0</cargo-maven2-plugin.version>
 
 		<!-- 内部依赖项目 -->
 		<rest-common.version>1.0.0-SNAPSHOT</rest-common.version>
