@@ -16,9 +16,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import io.junq.examples.common.interfaces.INameableDto;
 import io.junq.examples.common.persistence.model.INameableEntity;
-import lombok.Data;
 
-@Data
 @Entity
 public class Role implements INameableEntity, INameableDto {
 	
@@ -51,6 +49,36 @@ public class Role implements INameableEntity, INameableDto {
         privileges = privilegesToSet;
     }
 
+    // Getters and Setters
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(final Long idToSet) {
+        id = idToSet;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String nameToSet) {
+        name = nameToSet;
+    }
+
+    public Set<Privilege> getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(final Set<Privilege> privilegesToSet) {
+        privileges = privilegesToSet;
+    }
+
+    //
 
     @Override
     public int hashCode() {
