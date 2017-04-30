@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Configuration
-@ComponentScan({ "io.junq.examples.usercenter.web" })
+@ComponentScan({ "io.junq.examples.usercenter.web", "io.junq.examples.common.web" })
 @EnableWebMvc
 public class UserCenterWebConfiguration extends WebMvcConfigurerAdapter {
 

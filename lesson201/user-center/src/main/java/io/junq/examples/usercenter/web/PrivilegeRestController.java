@@ -3,6 +3,7 @@ package io.junq.examples.usercenter.web;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -78,7 +79,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody final Privilege resource) {
+    public void create(@RequestBody @Valid final Privilege resource) {
         createInternal(resource);
     }
 
@@ -86,7 +87,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") final Long id, @RequestBody final Privilege resource) {
+    public void update(@PathVariable("id") final Long id, @RequestBody @Valid final Privilege resource) {
         updateInternal(id, resource);
     }
 
