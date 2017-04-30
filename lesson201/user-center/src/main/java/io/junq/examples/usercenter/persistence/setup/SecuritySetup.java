@@ -80,6 +80,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         final Privilege entityByName = privilegeService.findByName(name);
         if (entityByName == null) {
             final Privilege entity = new Privilege(name);
+            entity.setDescription("sample description [change me]");
             privilegeService.create(entity);
         }
     }
