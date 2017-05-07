@@ -26,8 +26,8 @@ public class Privilege implements INameableEntity, INameableDto {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    @Size(min = 2, max = 30)
     @NotNull
+    @Size(min = 2, max = 99)
     private String name;
 
     @Column(unique = false, nullable = false)

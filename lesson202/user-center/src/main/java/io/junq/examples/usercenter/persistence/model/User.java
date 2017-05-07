@@ -11,8 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Email;
 
 import io.junq.examples.common.interfaces.INameableDto;
 import io.junq.examples.common.persistence.model.INameableEntity;
@@ -25,7 +30,17 @@ public class User implements INameableEntity, INameableDto {
 	private Long id;
 
 	@Column(unique = true, nullable = false)
+	@NotNull
+	@Size(min = 2, max = 30)
 	private String name;
+	
+	@NotNull
+	@Email
+	private String email;
+	
+	@Min(0)
+	@Max(99)
+	private int age;
 
 	@Column(nullable = false)
 	private String password;
