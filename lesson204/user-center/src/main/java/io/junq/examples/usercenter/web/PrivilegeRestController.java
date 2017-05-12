@@ -39,7 +39,10 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     // 查找：所有、分页
 
     @Override
-    @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
+    @RequestMapping(
+    		params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY },
+    		method = RequestMethod.GET
+    		)
     @ResponseBody
     public List<Privilege> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
             @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
@@ -47,21 +50,30 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     }
 
     @Override
-    @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
+    @RequestMapping(
+    		params = { QueryConstants.PAGE, QueryConstants.SIZE },
+    		method = RequestMethod.GET
+    		)
     @ResponseBody
     public List<Privilege> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         return findPaginatedAndSortedInternal(page, size, null, null);
     }
 
     @Override
-    @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
+    @RequestMapping(
+    		params = { QueryConstants.SORT_BY },
+    		method = RequestMethod.GET
+    		)
     @ResponseBody
-    public List<Privilege> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public List<Privilege> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+    		@RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(
+    		method = RequestMethod.GET
+    		)
     @ResponseBody
     public List<Privilege> findAll(final HttpServletRequest request) {
         return findAllInternal(request);
@@ -69,7 +81,10 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
 
     // 查找：单条记录
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(
+    		value = "/{id}", 
+    		method = RequestMethod.GET
+    		)
     @ResponseBody
     public Privilege findOne(@PathVariable("id") final Long id) {
         return findOneInternal(id);
@@ -77,7 +92,9 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
 
     // 新建
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(
+    		method = RequestMethod.POST
+    		)
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody @Valid final Privilege resource) {
         createInternal(resource);
@@ -85,7 +102,10 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
 
     // 更新
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(
+    		value = "/{id}", 
+    		method = RequestMethod.PUT
+    		)
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") final Long id, @RequestBody @Valid final Privilege resource) {
         updateInternal(id, resource);
@@ -93,7 +113,10 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
 
     // 删除
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(
+    		value = "/{id}", 
+    		method = RequestMethod.DELETE
+    		)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);

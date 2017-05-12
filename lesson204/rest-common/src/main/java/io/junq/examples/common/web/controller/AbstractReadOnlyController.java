@@ -18,6 +18,7 @@ import com.google.common.collect.Lists;
 
 import io.junq.examples.common.persistence.model.IEntity;
 import io.junq.examples.common.persistence.service.IRawService;
+import io.junq.examples.common.util.QueryConstants;
 import io.junq.examples.common.web.RestPreconditions;
 import io.junq.examples.common.web.exception.IJResourceNotFoundException;
 
@@ -43,7 +44,9 @@ public abstract class AbstractReadOnlyController <T extends IEntity> {
     // 查找：所有记录
 
     protected final List<T> findAllInternal(final HttpServletRequest request) {
-        if (request.getParameterNames().hasMoreElements()) {
+    	// 如果URL中包含其它参数直接返回找不到资源，特例是如果要支持URL查询参数内容协商的话，需要放过对应参数。
+        if (!request.getParameterMap().containsKey(QueryConstants.FORMAT) &&
+        		request.getParameterNames().hasMoreElements()) {
             throw new IJResourceNotFoundException();
         }
 
