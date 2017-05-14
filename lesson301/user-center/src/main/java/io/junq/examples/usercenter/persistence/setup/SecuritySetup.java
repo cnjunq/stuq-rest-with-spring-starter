@@ -14,12 +14,12 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
 import io.junq.examples.common.spring.util.Profiles;
+import io.junq.examples.usercenter.persistence.model.Principal;
 import io.junq.examples.usercenter.persistence.model.Privilege;
 import io.junq.examples.usercenter.persistence.model.Role;
-import io.junq.examples.usercenter.persistence.model.User;
+import io.junq.examples.usercenter.service.IPrincipalService;
 import io.junq.examples.usercenter.service.IPrivilegeService;
 import io.junq.examples.usercenter.service.IRoleService;
-import io.junq.examples.usercenter.service.IUserService;
 import io.junq.examples.usercenter.util.UserCenter;
 import io.junq.examples.usercenter.util.UserCenter.Privileges;
 import io.junq.examples.usercenter.util.UserCenter.Roles;
@@ -35,7 +35,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     private boolean setupDone;
 
     @Autowired
-    private IUserService userService;
+    private IPrincipalService principalService;
 
     @Autowired
     private IRoleService roleService;
@@ -49,6 +49,11 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
     //
 
+    /**
+     * - note that this is a compromise - the flag makes this bean statefull which can (and will) be avoided in the future by a more advanced mechanism <br>
+     * - the reason for this is that the context is refreshed more than once throughout the lifecycle of the deployable <br>
+     * - alternatives: proper persisted versioning
+     */
     @Override
     public final void onApplicationEvent(final ContextRefreshedEvent event) {
         if (!setupDone) {
@@ -56,7 +61,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
             createPrivileges();
             createRoles();
-            createUserss();
+            createPrincipals();
 
             setupDone = true;
             LOGGER.info("Setup Done");
@@ -80,7 +85,6 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         final Privilege entityByName = privilegeService.findByName(name);
         if (entityByName == null) {
             final Privilege entity = new Privilege(name);
-            entity.setDescription("sample description [change me]");
             privilegeService.create(entity);
         }
     }
@@ -102,6 +106,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         Preconditions.checkNotNull(canUserRead);
         Preconditions.checkNotNull(canUserWrite);
 
+        createRoleIfNotExisting(Roles.ROLE_ENDUSER, Sets.<Privilege> newHashSet(canUserRead, canRoleRead, canPrivilegeRead));
         createRoleIfNotExisting(Roles.ROLE_ADMIN, Sets.<Privilege> newHashSet(canUserRead, canUserWrite, canRoleRead, canRoleWrite, canPrivilegeRead, canPrivilegeWrite));
     }
 
@@ -114,20 +119,21 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         }
     }
 
-    // User/User
+    // Principal/User
 
-    final void createUserss() {
+    final void createPrincipals() {
         final Role roleAdmin = roleService.findByName(Roles.ROLE_ADMIN);
+        final Role roleUser = roleService.findByName(Roles.ROLE_ENDUSER);
 
-        createUserIfNotExisting(UserCenter.ADMIN_EMAIL, UserCenter.ADMIN_PASS, Sets.<Role> newHashSet(roleAdmin));
+        createPrincipalIfNotExisting(UserCenter.ADMIN_EMAIL, UserCenter.ADMIN_PASS, Sets.<Role> newHashSet(roleAdmin));
+        createPrincipalIfNotExisting(UserCenter.USER_EMAIL, UserCenter.USER_PASS, Sets.<Role> newHashSet(roleUser));
     }
 
-    final void createUserIfNotExisting(final String loginName, final String pass, final Set<Role> roles) {
-        final User entityByName = userService.findByName(loginName);
+    final void createPrincipalIfNotExisting(final String loginName, final String pass, final Set<Role> roles) {
+        final Principal entityByName = principalService.findByName(loginName);
         if (entityByName == null) {
-            final User entity = new User(loginName, pass, roles);
-            userService.create(entity);
+            final Principal entity = new Principal(loginName, pass, roles);
+            principalService.create(entity);
         }
     }
-
 }

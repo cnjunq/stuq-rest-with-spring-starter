@@ -39,6 +39,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- 安全 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -75,7 +81,7 @@
 						<type>embedded</type>
 						<systemProperties>
 							<envTarget>local</envTarget>
-                            <persistenceTarget>production</persistenceTarget>
+							<persistenceTarget>production</persistenceTarget>
 						</systemProperties>
 					</container>
 					<configuration>

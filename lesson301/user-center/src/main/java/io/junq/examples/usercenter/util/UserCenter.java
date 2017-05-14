@@ -8,6 +8,10 @@ public class UserCenter {
 	public static final String ADMIN_USERNAME = "admin";
 	public static final String ADMIN_PASS = "adminpass";
 	public static final String ADMIN_EMAIL = "admin@junq.io";
+	
+    public static final String USER_USERNAME = "user";
+    public static final String USER_PASS = "userpass";
+    public static final String USER_EMAIL = "user@junq.io";
 
 	public static final String NAME = ADMIN_USERNAME;
 	public static final String PASS = ADMIN_PASS;

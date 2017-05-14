@@ -39,6 +39,12 @@
 			</exclusions>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons-codec.version}</version>
+		</dependency>
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -67,6 +73,12 @@
 			<artifactId>tomcat-servlet-api</artifactId>
 			<version>${tomcat.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- 安全 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
 		</dependency>
 
 		<!-- 验证 -->
