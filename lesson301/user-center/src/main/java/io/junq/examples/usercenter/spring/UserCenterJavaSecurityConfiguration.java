@@ -22,17 +22,18 @@ public class UserCenterJavaSecurityConfiguration extends WebSecurityConfigurerAd
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
-
-    @Override
-    protected void configure(final HttpSecurity http) throws Exception {
-        http.
-        authorizeRequests().
-        // antMatchers("/api/**"). // if you want a more explicit mapping here
-        anyRequest().
-        authenticated().
-        and().
-        httpBasic().and().
-        sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);        
-    }
-
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic()
+			.and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			;
+	}
+	
 }
