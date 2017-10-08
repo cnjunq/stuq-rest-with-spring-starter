@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ import io.junq.examples.common.web.controller.ISortingController;
 import io.junq.examples.usercenter.persistence.model.Privilege;
 import io.junq.examples.usercenter.service.IPrivilegeService;
 import io.junq.examples.usercenter.util.UserCenterMapping;
+import io.junq.examples.usercenter.util.UserCenter.Privileges;
 
 @Controller
 @RequestMapping(value = UserCenterMapping.PRIVILEGES)
@@ -44,6 +46,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     		method = RequestMethod.GET
     		)
     @ResponseBody
+    @Secured(Privileges.CAN_ROLE_READ)
     public List<Privilege> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
             @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
@@ -55,6 +58,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     		method = RequestMethod.GET
     		)
     @ResponseBody
+    @Secured(Privileges.CAN_ROLE_READ)
     public List<Privilege> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         return findPaginatedAndSortedInternal(page, size, null, null);
     }
@@ -65,6 +69,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     		method = RequestMethod.GET
     		)
     @ResponseBody
+    @Secured(Privileges.CAN_ROLE_READ)
     public List<Privilege> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
     		@RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
@@ -75,6 +80,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     		method = RequestMethod.GET
     		)
     @ResponseBody
+    @Secured(Privileges.CAN_ROLE_READ)
     public List<Privilege> findAll(final HttpServletRequest request) {
         return findAllInternal(request);
     }
@@ -86,6 +92,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     		method = RequestMethod.GET
     		)
     @ResponseBody
+    @Secured(Privileges.CAN_ROLE_READ)
     public Privilege findOne(@PathVariable("id") final Long id) {
         return findOneInternal(id);
     }
@@ -96,6 +103,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     		method = RequestMethod.POST
     		)
     @ResponseStatus(HttpStatus.CREATED)
+    @Secured(Privileges.CAN_ROLE_WRITE)
     public void create(@RequestBody @Valid final Privilege resource) {
         createInternal(resource);
     }
@@ -107,6 +115,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     		method = RequestMethod.PUT
     		)
     @ResponseStatus(HttpStatus.OK)
+    @Secured(Privileges.CAN_ROLE_WRITE)
     public void update(@PathVariable("id") final Long id, @RequestBody @Valid final Privilege resource) {
         updateInternal(id, resource);
     }
@@ -118,6 +127,7 @@ public class PrivilegeRestController extends AbstractController<Privilege> imple
     		method = RequestMethod.DELETE
     		)
     @ResponseStatus(HttpStatus.OK)
+    @Secured(Privileges.CAN_ROLE_WRITE)
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }

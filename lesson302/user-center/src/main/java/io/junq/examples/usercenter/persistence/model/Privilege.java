@@ -30,7 +30,7 @@ public class Privilege implements INameableEntity, INameableDto {
     @Size(min = 2, max = 99)
     private String name;
 
-    @Column(unique = false, nullable = false)
+    @Column(unique = false, nullable = true)
     private String description;
 
     @JsonIgnore

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import io.junq.examples.common.web.controller.AbstractController;
 import io.junq.examples.common.web.controller.ISortingController;
 import io.junq.examples.usercenter.persistence.model.User;
 import io.junq.examples.usercenter.service.IUserService;
+import io.junq.examples.usercenter.util.UserCenter.Privileges;
 import io.junq.examples.usercenter.util.UserCenterMapping;
 
 @Controller
@@ -40,6 +42,7 @@ public class UserRestController extends AbstractController<User> implements ISor
     @Override
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
             @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
@@ -48,6 +51,7 @@ public class UserRestController extends AbstractController<User> implements ISor
     @Override
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         return findPaginatedAndSortedInternal(page, size, null, null);
     }
@@ -55,6 +59,7 @@ public class UserRestController extends AbstractController<User> implements ISor
     @Override
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
     }
@@ -62,6 +67,7 @@ public class UserRestController extends AbstractController<User> implements ISor
     @Override
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> findAll(final HttpServletRequest request) {
         return findAllInternal(request);
     }
@@ -70,6 +76,7 @@ public class UserRestController extends AbstractController<User> implements ISor
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public User findOne(@PathVariable("id") final Long id) {
         return findOneInternal(id);
     }
@@ -78,6 +85,7 @@ public class UserRestController extends AbstractController<User> implements ISor
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
+    @Secured("CAN_CREATE_USER")
     public void create(@RequestBody final User resource) {
         createInternal(resource);
     }
@@ -86,6 +94,7 @@ public class UserRestController extends AbstractController<User> implements ISor
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
+    @Secured("CAN_UPDATE_USER")
     public void update(@PathVariable("id") final Long id, @RequestBody final User resource) {
         updateInternal(id, resource);
     }
@@ -94,6 +103,7 @@ public class UserRestController extends AbstractController<User> implements ISor
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
+    @Secured("CAN_DELETE_USER")
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }
