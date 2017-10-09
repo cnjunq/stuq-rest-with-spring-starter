@@ -1,4 +1,4 @@
-angular.module('welcome ', [ 'ngRoute' ]).config(function($routeProvider) {
+angular.module('welcome', [ 'ngRoute' ]).config(function($routeProvider) {
 
     $routeProvider.when('/', {
         templateUrl : 'home.html',
