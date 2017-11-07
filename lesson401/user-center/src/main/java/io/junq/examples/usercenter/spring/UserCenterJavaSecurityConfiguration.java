@@ -33,22 +33,28 @@ public class UserCenterJavaSecurityConfiguration extends WebSecurityConfigurerAd
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		http
 			.authorizeRequests()
-			
 			.anyRequest()
-			.authenticated()
-			
-			.and()
-			.httpBasic()
-			.authenticationEntryPoint(authenticationEntryPoint)
-			
-			.and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			
-			.and()
-			.csrf().disable()
-			;
+			.permitAll();
+		
+//		http
+//			.authorizeRequests()
+//			
+//			.anyRequest()
+//			.authenticated()
+//			
+//			.and()
+//			.httpBasic()
+//			.authenticationEntryPoint(authenticationEntryPoint)
+//			
+//			.and()
+//			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//			
+//			.and()
+//			.csrf().disable()
+//			;
 	}
 			
 }

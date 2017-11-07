@@ -10,7 +10,7 @@ angular.module('welcome', [ 'ngRoute' ]).config(function($routeProvider) {
         "Accept" : "application/json", 
     };
     
-    $http.get("http://localhost:8082/api/roles/1", {
+    $http.get("http://localhost:8082/api/roles/7", {
         headers : headers
     }).success(function(data) {
         $scope.role = data;
